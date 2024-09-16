@@ -7,7 +7,7 @@ CREATE TABLE row_data.sales (
 	gasoline_consumption NUMERIC (3, 1) null,
 	price NUMERIC (9, 2),
 	"date" date,
-	person_name varchar,
+	person varchar,
 	phone varchar,
 	discount NUMERIC (4, 2),
 	brand_origin varchar
