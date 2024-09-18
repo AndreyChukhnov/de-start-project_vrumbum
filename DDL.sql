@@ -12,7 +12,8 @@ CREATE TABLE car_shop.colors (
 -- создаем таблицу справочник автомобилей cars
 CREATE TABLE car_shop.cars(
 	id_car smallserial PRIMARY KEY,
-	car varchar
+	car varchar, 
+	brand_origin varchar
 )
 
 --создадим таблицу справочник моделей автомобилей odels и свяжем его со справочником cars по id_car
@@ -31,12 +32,6 @@ CREATE TABLE  car_shop.customers(
 	phone varchar
 );
 
--- создадим справочник стран происхождения countries_of_origin
-CREATE TABLE car_shop.countries_of_origin (
-	id_brand serial PRIMARY KEY,
-	brand_origin varchar
-);
-
 -- создадим таблицу событий sales
 CREATE TABLE car_shop.sales(
 	id serial PRIMARY KEY,
@@ -45,7 +40,6 @@ CREATE TABLE car_shop.sales(
 	price numeric(9, 2),
 	"date" date,
 	id_customer integer REFERENCES car_shop.customers(id_customer),
-	discount numeric(4, 2),
-	id_brand SMALLINT REFERENCES car_shop.countries_of_origin (id_brand) null
+	discount numeric(4, 2)
 );
 

@@ -6,12 +6,13 @@ SELECT DISTINCT TRIM(SUBSTRING(auto FROM strpos(auto, ',') + 1))
 FROM row_data.sales;cit
 
 -- наполним таблицу cars данными
-INSERT INTO car_shop.cars(car)
+INSERT INTO car_shop.cars (car, brand_origin)
 SELECT 
-	TRIM(SPLIT_PART(auto, ' ', 1)) AS car
-FROM row_data.sales
-GROUP BY TRIM(SPLIT_PART(auto, ' ', 1))
-ORDER BY TRIM(SPLIT_PART(auto, ' ', 1)) ASC;
+	TRIM(SPLIT_PART(auto, ' ', 1)) AS car,
+	brand_origin
+FROM row_data.sales s
+GROUP BY TRIM(SPLIT_PART(auto, ' ', 1)), brand_origin
+ORDER BY TRIM(SPLIT_PART(auto, ' ', 1));
 
 -- наполним талицу models  данными 
 INSERT INTO car_shop.models (model, gasoline_consumption, id_car)
@@ -35,30 +36,19 @@ FROM row_data.sales
 GROUP BY 1, 2, 3
 ORDER BY 2, 1;
 
--- наполним таблицу countries_of_origin данными 
-INSERT INTO car_shop.countries_of_origin(brand_origin)
-select
-	brand_origin 
-FROM row_data.sales s 
-WHERE brand_origin IS NOT NULL
-GROUP BY 1
-ORDER BY 1;
-
 -- наполним таблицу sales данными
-INSERT INTO car_shop.sales (id_model, id_color, price, date, id_customer, discount, id_brand)
-SELECT
+INSERT INTO car_shop.sales (id_model, id_color, price, date, id_customer, discount)
+SELECT 
        m.id_model,
        col.id_color,
        s.price,
        s."date" ,
        c.id_customer,
-       s.discount ,
-       coo.id_brand
+       s.discount 
 FROM row_data.sales s
 LEFT JOIN car_shop.models m 
 	ON SUBSTRING(auto FROM POSITION(' ' IN auto) + 1 FOR POSITION(',' IN auto) - POSITION(' ' IN auto) - 1) = m.model
 LEFT JOIN car_shop.customers c 
 	ON s.phone = c.phone
-LEFT JOIN car_shop.countries_of_origin coo USING (brand_origin)
 LEFT JOIN car_shop.colors col 
 	ON TRIM(SUBSTRING(auto FROM strpos(auto, ',') + 1)) = col.color;
