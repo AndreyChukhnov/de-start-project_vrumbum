@@ -1,4 +1,4 @@
-/*добавьте сюда запрос для решения задания 6*/
+/*Количество всех пользователей из США*/
 SELECT 
 	count(*) AS persons_from_usa_count
 FROM car_shop.customers c 
