@@ -1,4 +1,4 @@
-/*добавьте сюда запрос для решения задания 1*/
+/*Процент моделей машин, у которых нет параметра gasoline_consumption*/
 SELECT 
 	(COUNT(
 		CASE WHEN gasoline_consumption IS NULL THEN 1 END
