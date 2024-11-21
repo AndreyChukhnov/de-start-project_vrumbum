@@ -1,4 +1,4 @@
-/*добавьте сюда запрос для решения задания 4*/
+/*Список купленных машин у каждого пользователя*/
 SELECT
 	concat(c2.first_name, ' ', c2.last_name) AS person,
 	string_agg(concat(c.car, ' ', m.model), ', ') AS car
